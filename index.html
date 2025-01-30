@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Not Fancy Countdown Timer (Vue)</title>
+  <link rel="stylesheet" href="https://public.codepenassets.com/css/normalize-5.0.0.min.css">
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css'>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Sarpanch'><link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div id="app">
+  <div class="outer-container">
+    <div class="inner-container">
+      <h1> Mr. Farewell </h1>
+      <div class="countdown">
+        <h2>
+          {{ timeLeft }}
+        </h2>
+      <ul class="columns is-mobile is-centered">
+        <li v-for="(time, index) in times" :key="index" class="column time">
+          <a v-on:click.prevent="setTime(time.sec)" :class="[
+                'button',
+                'is-link',
+                {'is-active': time.sec === selectedTime && endTime !== 0 }
+              ]">
+              {{ time.display }}
+            </a>
+        </li>
+      </ul>
+
+      
+    </div>
+  </div>
+</div>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js'></script><script  src="./script.js"></script>
+
+</body>
+</html>
