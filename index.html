@@ -1,42 +1,81 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Not Fancy Countdown Timer (Vue)</title>
-  <link rel="stylesheet" href="https://public.codepenassets.com/css/normalize-5.0.0.min.css">
-<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
-<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css'>
-<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Sarpanch'><link rel="stylesheet" href="./style.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fancy Timer</title>
+    <link rel="stylesheet" href="better.css">
 </head>
 <body>
-<!-- partial:index.partial.html -->
-<div id="app">
-  <div class="outer-container">
-    <div class="inner-container">
-      <h1> Mr. Farewell </h1>
-      <div class="countdown">
-        <h2>
-          {{ timeLeft }}
-        </h2>
-      <ul class="columns is-mobile is-centered">
-        <li v-for="(time, index) in times" :key="index" class="column time">
-          <a v-on:click.prevent="setTime(time.sec)" :class="[
-                'button',
-                'is-link',
-                {'is-active': time.sec === selectedTime && endTime !== 0 }
-              ]">
-              {{ time.display }}
-            </a>
-        </li>
-      </ul>
-
-      
+    <div class="container" id="timerContainer">
+        <h1>Mr. Farewell</h1>
+        <label for="timeInput" id="timeLabel">Set Time</label>
+        <input type="number" id="timeInput" min="1" value="10">
+        <button onclick="startTimer()" id="startButton">Start</button>
+        <h2 id="display">00:00</h2>
+        <button onclick="stopTimer()" id="stopButton" class="stopButton">Stop</button>
     </div>
-  </div>
-</div>
-<!-- partial -->
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js'></script><script  src="./script.js"></script>
+    
+    <audio id="tickSound" src="pink.mp3" preload="auto"></audio>
+    <audio id="endSound" src="alarm.mp3" preload="auto"></audio>
 
+    <script>
+        let timer;
+        let timeRemaining;
+        let ticking = false;
+
+        function startTimer() {
+            if (ticking) return;
+            let timeInput = document.getElementById("timeInput").value;
+            timeRemaining = parseInt(timeInput);
+            ticking = true;
+            document.getElementById("startButton").classList.add("hidden");
+            document.getElementById("timeInput").classList.add("hidden");
+            document.getElementById("timeLabel").classList.add("hidden");
+            document.getElementById("timerContainer").classList.add("fullscreen");
+            document.getElementById("display").style.fontSize = "140px";
+            document.getElementById("stopButton").style.fontSize = "30px";
+            let tickSound = document.getElementById("tickSound");
+            tickSound.play();
+            updateDisplay();
+            timer = setInterval(() => {
+                if (timeRemaining > 0) {
+                    timeRemaining--;
+                    updateDisplay();
+                } else {
+                    clearInterval(timer);
+                    ticking = false;
+                    tickSound.pause();
+                    tickSound.currentTime = 0;
+                    let endSound = document.getElementById("endSound");
+                    endSound.play();
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timer);
+            ticking = false;
+            let tickSound = document.getElementById("tickSound");
+            let endSound = document.getElementById("endSound");
+            tickSound.pause();
+            tickSound.currentTime = 0;
+            endSound.pause();
+            endSound.currentTime = 0;
+            document.getElementById("startButton").classList.remove("hidden");
+            document.getElementById("timeInput").classList.remove("hidden");
+            document.getElementById("timeLabel").classList.remove("hidden");
+            document.getElementById("timerContainer").classList.remove("fullscreen");
+            document.getElementById("display").style.fontSize = "60px";
+            document.getElementById("stopButton").style.fontSize = "24px";
+        }
+
+        function updateDisplay() {
+            let minutes = Math.floor(timeRemaining / 60);
+            let seconds = timeRemaining % 60;
+            document.getElementById("display").textContent = 
+                (minutes < 10 ? "0" : "") + minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+        }
+    </script>
 </body>
 </html>

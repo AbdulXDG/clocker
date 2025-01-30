@@ -27,14 +27,14 @@ body {
 }
 h1 {
   text-align: center;
-  font-size: 30px;
-  color: #ff0096;
+  font-size: 60px;
+  color: #000000;
 }
 h2 {
-  font-size: 120px;
-  width: 390px;
+  font-size: 200px;
   line-height: 1;
-  text-align: center;
+  text-align:right;
+  left:90px;
   color: white;
 }
 h3 {
@@ -50,12 +50,19 @@ h3 span {
   text-align: center;
 }
 .time {
-  display: flex;
+  display:block;
   justify-content: center;
 }
 .columns {
   margin-left: 0;
   margin-right: 0;
+}
+a{
+  display: block;
+  padding: 20%;
+  font-size: large;
+  height: 50px;
+  width: 100px;
 }
 /* ==================
 *  SOCIAL MEDIA

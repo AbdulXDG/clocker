@@ -16,12 +16,12 @@ new Vue({
         display: ' 1m'
       },
       {
-        sec: 600,
-        display: '10m'
+        sec: 120,
+        display: '2m'
       },
       {
-        sec: 900,
-        display: '15m'
+        sec: 300,
+        display: '5m'
       }
     ]
   },
@@ -70,6 +70,8 @@ new Vue({
       this.endTime = `${hourConvert(hour)}:${zeroPadded(minutes)}`
     },
   }
+
+
 })
 
 function zeroPadded(num) {
